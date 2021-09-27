@@ -1,0 +1,17 @@
+@import 'styles/vars.scss';
+
+.current-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  &__current {
+    @include variably(font-size, 16px, 12px);
+
+    padding: 0 20px;
+
+    font-size: 20px;
+    font-weight: bold;
+  }
+}

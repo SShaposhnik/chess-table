@@ -1,0 +1,16 @@
+@import 'styles/vars.scss';
+
+.loader-container {
+  position: relative;
+  display: flex;
+
+  &__bottom {
+    opacity: 0.3;
+  }
+
+  &__top {
+    opacity: 0.9;
+    position: absolute;
+    left: 0;
+  }
+}

@@ -1,0 +1,44 @@
+$color-green: #26CA42;
+$color-orange: #FF6617;
+$color-black: #232327;
+$color-grey: #C6CBD9;
+$color-grey-light: #F4F4FA;
+$color-grey-dark: #9497AA;
+$color-grey-text: #A1A7B8;
+$color-ios-red: #fb2226;
+$color-btn-background: #FFF0E8;
+
+
+$color-grey-two: #AAAFB7;
+$color-green-light: rgba(76, 200, 38, 0.78);
+
+$maxMobileWidth: 875px;
+
+@mixin variably($property, $desktop-value, $mobile-value) {
+  #{$property}: $desktop-value;
+
+  @media (max-width: $maxMobileWidth) {
+    #{$property}: $mobile-value;
+  }
+}
+
+@mixin flex-display($ai: center, $jc: center) {
+  display: flex;
+  align-items: $ai;
+  justify-content: $jc;
+}
+
+@mixin font-main {
+  font-family: 'Rubik-Regular', -apple-system, 'Helvetica Neue', 'Helvetica',
+  'Arial', 'Lucida Grande', sans-serif !important;
+}
+
+@mixin font-main--medium {
+  font-family: 'Rubik-Medium', -apple-system, 'Helvetica Neue', 'Helvetica',
+  'Arial', 'Lucida Grande', sans-serif !important;
+}
+
+@mixin font-main--bold() {
+  font-family: 'Rubik-Bold', -apple-system, 'Helvetica Neue', 'Helvetica',
+  'Arial', 'Lucida Grande', sans-serif !important;
+}

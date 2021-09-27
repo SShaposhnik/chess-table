@@ -1,0 +1,9 @@
+@import 'styles/vars.scss';
+
+body {
+  margin: 0;
+  @include variably(padding, 20px, 4px);
+
+  @include font-main();
+  background-color: $color-grey-light;
+}
