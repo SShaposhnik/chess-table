@@ -50,6 +50,7 @@ const BottomSheet: React.FC<IBottomSheetProps> = (props) => {
       initialFocusRef={ref}
       header={header}
       footer={footer}
+      contentEditable="true"
     >
       {children}
     </RootBottomSheet>

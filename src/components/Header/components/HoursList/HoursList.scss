@@ -3,8 +3,7 @@
 .days-list {
   position: relative;
   display: flex;
-  scroll-behavior: smooth;
-  overflow-y: auto;
+  overflow: auto;
 
   &__day {
     box-sizing: border-box;

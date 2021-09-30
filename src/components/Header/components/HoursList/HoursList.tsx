@@ -1,23 +1,15 @@
-/* eslint-disable object-curly-newline */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { addDays, getDaysInMonth, startOfMonth, getHours, startOfDay } from 'date-fns';
+import React, { useEffect, useRef, useState } from 'react';
+import { ScrollSyncPane } from 'react-scroll-sync';
 
-import { formatDate } from 'utils';
+import { useLeftIndent } from 'hooks';
 
 import './HoursList.scss';
 
-interface Props {
-  date: Date
-  setDate(date: Date): void
-}
-
-const timeSlotWidth = 161;
-
-const HoursList: React.FC<Props> = ({ date, setDate }) => {
+const HoursList: React.FC = () => {
   const [hours, setHours] = useState<string[]>([]);
-  const [currentHour, setCurrentHour] = useState<number | null>(null);
 
   const listRef = useRef<HTMLDivElement | null>(null);
+  const { absoluteIndent } = useLeftIndent();
 
   const getMonthDays = () => {
     const arr = [];
@@ -30,31 +22,6 @@ const HoursList: React.FC<Props> = ({ date, setDate }) => {
     setHours(arr);
   };
 
-  const hour = () => {
-    const current = getHours(new Date());
-
-    setCurrentHour(current);
-  };
-
-  const calculateLeftPropertyValue = () => {
-    if (!currentHour) {
-      return 0;
-    }
-
-    const hourStr = formatDate(Date.now(), 'HH');
-    const hourNum = parseInt(hourStr, 10);
-
-    const minutesStr = formatDate(Date.now(), 'mm');
-    const minutesNum = parseInt(minutesStr, 10);
-
-    const hoursIndent = timeSlotWidth * hourNum;
-    const minutesIndent = (timeSlotWidth / 60) * minutesNum;
-
-    return hoursIndent + minutesIndent;
-  };
-
-  const leftValue = useMemo(() => calculateLeftPropertyValue(), [currentHour]);
-
   const scrollToDay = () => {
     const { current } = listRef;
 
@@ -63,48 +30,44 @@ const HoursList: React.FC<Props> = ({ date, setDate }) => {
     }
 
     current.scrollTo({
-      left: leftValue - 100,
+      left: absoluteIndent - 100,
     });
   };
 
   useEffect(() => {
     scrollToDay();
-  }, [listRef, currentHour]);
+  }, [listRef, absoluteIndent]);
 
   useEffect(() => {
     getMonthDays();
-    hour();
-
-    setInterval(() => {
-      hour();
-    }, 1000 * 60 * 10);
   }, []);
 
   return (
-    <div className="days-list no-scrollbar" ref={listRef}>
-      {
-        hours.map((day) => (
-          <div key={day.valueOf()} className="days-list__day">
-            <div style={{ width: 120, textAlign: 'center' }}>
-              {day}
+    <ScrollSyncPane>
+      <div className="days-list no-scrollbar" ref={listRef}>
+        {
+          hours.map((day) => (
+            <div key={day.valueOf()} className="days-list__day">
+              <div style={{ width: 120, textAlign: 'center' }}>
+                {day}
+              </div>
             </div>
-          </div>
-        ))
-      }
-
-      <div
-        className="days-list__timeline"
-        style={{
-          left: leftValue + 7,
-        }}
-      />
-      <div
-        className="days-list__circle"
-        style={{
-          left: leftValue,
-        }}
-      />
-    </div>
+          ))
+        }
+        <div
+          className="days-list__circle"
+          style={{
+            left: absoluteIndent,
+          }}
+        />
+        <div
+          className="days-list__timeline"
+          style={{
+            left: absoluteIndent + 7,
+          }}
+        />
+      </div>
+    </ScrollSyncPane>
   );
 };
 

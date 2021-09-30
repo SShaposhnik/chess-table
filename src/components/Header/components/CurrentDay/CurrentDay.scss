@@ -8,6 +8,7 @@
 
   &__current {
     @include variably(font-size, 16px, 12px);
+    @include variably(width, 170px, 105px);
 
     padding: 0 20px;
 

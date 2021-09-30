@@ -5,3 +5,4 @@ export { default as Loader } from './Loader/Loader';
 export { default as ChessTable } from './ChessTable/ChessTable';
 export { default as Reservation } from './Reservation/Reservation';
 export { default as BottomSheet } from './BottomSheet/BottomSheet';
+export { default as ElementWithCondition } from './ElementWithCondition/ElementWithCondition';

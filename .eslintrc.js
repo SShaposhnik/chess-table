@@ -28,7 +28,9 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',
     'no-underscore-dangle': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
     '@typescript-eslint/naming-convention': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
   },
   ignorePatterns: [
     // '*.js',

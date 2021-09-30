@@ -3,4 +3,14 @@
     display: grid;
     grid-template-columns: 2fr 8fr;
   }
+
+  &__timeline {
+    position: absolute;
+    top: 0;
+
+    width: 2px;
+    height: 100%;
+
+    background-color: blue;
+  }
 }

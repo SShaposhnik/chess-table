@@ -6,6 +6,7 @@ export const AvalibleIcons = {
   iconCalendar: 'iconCalendar',
   iconLeftArrow: 'iconLeftArrow',
   iconRightArrow: 'iconRightArrow',
+  iconPlusCircle: 'iconPlusCircle',
 };
 
 interface Props extends IconProps {

@@ -1,0 +1,29 @@
+@import 'styles/vars.scss';
+
+.info {
+
+  &__block {
+    margin-bottom: 24px;
+
+    &_title {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: bold;
+    }
+
+    &_text {
+      font-size: 12px;
+      color: $color-grey-dark;
+    }
+  }
+
+  &__additional {
+    &_name {
+      font-size: 12px;
+    }
+  }
+
+  &--mobile {
+    padding: 20px;
+  }
+}

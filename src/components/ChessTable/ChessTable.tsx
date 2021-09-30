@@ -1,43 +1,25 @@
 import { Reservation } from 'components';
+import { useLeftIndent } from 'hooks';
+import { ReservationType } from 'interfaces';
 import React from 'react';
 
 import './ChessTable.scss';
 
 interface Props {
-  a?: 1
+  list: ReservationType[]
 }
 
-const BATH = [
-  {
-    name: 'Баня №1',
-  },
-  {
-    name: 'Баня №2',
-  },
-  {
-    name: 'Баня №3 с очень длинными названием',
-  },
-  {
-    name: 'Баня №4',
-  },
-  {
-    name: 'Баня №5',
-  },
-  {
-    name: 'Баня №6',
-  },
-];
-
-const ChessTable: React.FC = () => {
-  console.log('ChessTable');
+const ChessTable: React.FC<Props> = ({ list }) => {
+  const { relativeIndent } = useLeftIndent();
 
   return (
     <div className="chess-table">
       {
-        BATH.map((bath) => (
+        list.map((bath) => (
           <Reservation
             key={bath.name}
             name={bath.name}
+            slots={bath.slots}
           />
         ))
       }

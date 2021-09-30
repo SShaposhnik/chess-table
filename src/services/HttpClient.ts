@@ -10,20 +10,15 @@ const BASE_URL = process.env.NODE_ENV === 'production'
   : 'http://localhost:80';
 
 axios.defaults.baseURL = BASE_URL;
-axios.interceptors.request.use(async (config) => {
-  const token = localStorage.getItem(StorageKeys.AUTH);
+// axios.interceptors.request.use(async (config) => {
+//   const token = localStorage.getItem(StorageKeys.AUTH);
+//   const { headers } = config;
 
-  if (token) {
-    const { headers } = config;
-    headers.common['Cache-Control'] = 'max-age=0';
-    headers.common.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-}, (error) => {
-  console.error('axios.interceptors.request', { error });
-  return Promise.reject(error);
-});
+//   return config;
+// }, (error) => {
+//   console.error('axios.interceptors.request', { error });
+//   return Promise.reject(error);
+// });
 
 export default class {
   static BASE_URL = BASE_URL;

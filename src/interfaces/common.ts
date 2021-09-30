@@ -5,3 +5,49 @@ export interface IconProps {
   height?: string | number,
   fill?: string,
 }
+
+export interface BathHouseResponse {
+  results: ReservationType[]
+  count: 4
+}
+
+export interface ReservationType {
+  name: string
+  slots: ReservationSlot[]
+}
+
+// eslint-disable-next-line max-len
+export type ReservationSlot = ReservationSlotCommon & ReservationSlotPayed | ReservationSlotNotPayed;
+
+type ReservationSlotCommon = {
+  id: string
+  text: string
+  price: number
+};
+
+export type Customer = {
+  name: string
+  paymentSum: number
+  phone: string
+  additionalServiceItems: []
+};
+
+type ReservationSlotPayed = {
+  isPayed: true
+  reservedByAdmin: boolean
+  customer: Customer
+};
+
+type ReservationSlotNotPayed = {
+  isPayed: false
+};
+
+export interface LoadingStateType {
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface DataStateType {
+  date: Date
+  setDate: React.Dispatch<React.SetStateAction<Date>>
+}
