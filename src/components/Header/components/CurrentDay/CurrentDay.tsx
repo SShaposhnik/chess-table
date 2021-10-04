@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IconButton } from '@mui/material';
 import { addDays, subDays } from 'date-fns';
 
 import { SvgIcon, Loader } from 'components';
 import { formatDate } from 'utils';
 import { useDate, useLoading } from 'hooks';
+import { ButtonsCallbacks } from 'context';
 
 import './CurrentDay.scss';
 
 const CurrentDay: React.FC = () => {
   const [loading] = useLoading();
   const [date, setDate] = useDate();
+  const {
+    onRightArrow,
+    onLeftArrow,
+  } = useContext(ButtonsCallbacks);
 
   const getCurrentDay = () => (
     formatDate(date, 'dd MMMM yyyy')
@@ -21,11 +26,23 @@ const CurrentDay: React.FC = () => {
   );
 
   const addDay = () => {
-    setDate(addDays(date, 1));
+    const newDate = addDays(date, 1);
+
+    setDate(newDate);
+
+    if (onRightArrow) {
+      onRightArrow(newDate);
+    }
   };
 
   const substractDay = () => {
-    setDate(subDays(date, 1));
+    const newDay = subDays(date, 1);
+
+    setDate(newDay);
+
+    if (onLeftArrow) {
+      onLeftArrow(newDay);
+    }
   };
 
   return (

@@ -1,24 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 
-import { Modal, Header, ChessTable } from 'components';
-import { MobileScreen, LoadingState, DateState } from 'context';
+import { Header, Reservation } from 'components';
+import { PluginProps } from 'interfaces';
+import {
+  MobileScreen,
+  LoadingState,
+  DateState,
+  ButtonsCallbacks,
+} from 'context';
 
 import 'styles';
-import { BathHouseService } from 'services';
-import { BathHouseResponse } from 'interfaces';
-import { formatDate } from 'utils';
 
 /**
  * Максимальная ширина экаран, после которой будет вертска для широких экранов
  */
 const MAX_CLIENT_WIDTH_FOR_PHONE = 875;
 
-const App: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+// const asd: PluginProps = {
+//   data: {
+//     count: 0,
+//     results: [],
+//   },
+//   containerId: 'calendar_plugin',
+//   onRightArrow: () => {
+//     console.log('ПРИВЕТ');
+//   }
+// };
+
+// eslint-disable-next-line react/no-unused-prop-types
+const App: React.FC<PluginProps> = (props) => {
+  const {
+    data = null,
+    onChangeDate,
+    onLeftArrow,
+    onRightArrow,
+  } = props;
+
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [isMobileScreen, setIsMobileScreen] = useState(false);
-  const [data, setData] = useState<BathHouseResponse | null>(null);
   const [date, setDate] = useState<Date>(new Date());
 
   const changeAnimation = () => {
@@ -28,16 +49,17 @@ const App: React.FC = () => {
   };
 
   const getBathList = async () => {
+    if (!onChangeDate) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const formattedDate = formatDate(date, 'yyyy-MM-dd');
-      const list = await BathHouseService.getBathHouseList(formattedDate);
-
-      setData(list);
+      await onChangeDate(date);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
+      setHasError(true);
     }
 
     setLoading(false);
@@ -54,25 +76,41 @@ const App: React.FC = () => {
     return () => window.removeEventListener('resize', changeAnimation);
   }, []);
 
+  if (hasError) {
+    return (
+      <div>
+        Данные не удалось загрузить
+      </div>
+    );
+  }
+
   return (
     <MobileScreen.Provider value={isMobileScreen}>
       <LoadingState.Provider value={{ loading, setLoading }}>
         <DateState.Provider value={{ date, setDate }}>
-          <ScrollSync horizontal>
-            <>
-              <Header />
+          <ButtonsCallbacks.Provider value={{ onLeftArrow, onRightArrow }}>
+            <ScrollSync horizontal>
+              <>
+                <Header />
 
-              {
-                !data ? 'Данные не удалось загрузить' : (
-                  <ChessTable list={data.results} />
-                )
-              }
-            </>
-          </ScrollSync>
-
-          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} maxWidth="350px">
-            123
-          </Modal>
+                {
+                  data && (
+                    <div className="chess-table">
+                      {
+                        data.results.map((bath) => (
+                          <Reservation
+                            key={bath.name}
+                            name={bath.name}
+                            slots={bath.slots}
+                          />
+                        ))
+                      }
+                    </div>
+                  )
+                }
+              </>
+            </ScrollSync>
+          </ButtonsCallbacks.Provider>
         </DateState.Provider>
       </LoadingState.Provider>
     </MobileScreen.Provider>

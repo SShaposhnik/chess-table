@@ -16,6 +16,23 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- <div id="calendar_plugin"></div> -->
+
+    <script>
+      window.addEventListener('load', () => {
+        window.BelePlugin({
+          data: {
+            count: 0,
+            results: [],
+          },
+          containerId: 'calendar_plugin',
+          onRightArrow: (date) => {
+            console.log(date);
+          }
+        });
+      });
+    </script>
+
     <div id="calendar_plugin"></div>
   </body>
 </html>

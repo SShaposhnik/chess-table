@@ -7,7 +7,6 @@
     "@emotion/styled": "^11.3.0",
     "@mui/lab": "^5.0.0-alpha.48",
     "@mui/material": "^5.0.1",
-    "axios": "^0.21.4",
     "classnames": "^2.3.1",
     "date-fns": "^2.24.0",
     "node-sass": "^4.14",
@@ -21,9 +20,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && yarn create-dist",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "create-dist": "mkdir build/dist && yarn copy-main",
+    "copy-main": "cp build/static/js/main*.chunk.js build/dist && mv build/dist/main*.chunk.js build/dist/main-bundle.js && yarn copy-main-2",
+    "copy-main-2": "cp build/static/js/2*.chunk.js build/dist && mv build/dist/2*.chunk.js build/dist/main-bundle-2.js && yarn copy-css",
+    "copy-css": "cp build/static/css/main*.chunk.css build/dist && mv build/dist/main*.chunk.css build/dist/main-css.css"
   },
   "browserslist": {
     "production": [

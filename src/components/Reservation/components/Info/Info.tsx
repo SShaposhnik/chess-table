@@ -27,11 +27,7 @@ const Block: React.FC<BlockProps> = ({ title, text }) => (
   </div>
 );
 
-const Info: React.FC<Props> = (props) => {
-  const {
-    name,
-  } = props;
-
+const Info: React.FC<Props> = () => {
   const isMobile = useContext(MobileScreen);
 
   return (

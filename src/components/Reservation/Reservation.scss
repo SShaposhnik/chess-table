@@ -24,6 +24,7 @@
     // scroll-behavior: smooth;
 
     &_inner {
+      position: relative;
       min-width: calc(161px * 24);
       display: flex;
     }

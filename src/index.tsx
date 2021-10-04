@@ -1,7 +1,15 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+
 import App from 'App/App';
+import { PluginProps } from 'interfaces';
 
-const rootElement = document.getElementById('calendar_plugin');
+const renderApp = (props: PluginProps) => {
+  const { containerId } = props;
+  const rootElement = document.getElementById(containerId);
 
-render(<App />, rootElement);
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  ReactDOM.render(<App {...props} />, rootElement);
+};
+
+window.BelePlugin = (props: PluginProps) => renderApp(props);

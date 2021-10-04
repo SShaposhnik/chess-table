@@ -1,8 +1,8 @@
-import React, { useContext, useMemo, useState } from 'react';
-import { differenceInMinutes, add, startOfDay } from 'date-fns';
+import React, { useContext, useMemo } from 'react';
+import { differenceInMinutes } from 'date-fns';
 
 import { MobileScreen } from 'context';
-import { BottomSheet, ElementWithCondition, SvgIcon } from 'components';
+import { ElementWithCondition } from 'components';
 import { maskPhone, parseDateInString, prepareSum } from 'utils';
 import { Customer } from 'interfaces';
 
@@ -58,7 +58,7 @@ const Item: React.FC<Props> = (props) => {
 
       <ElementWithCondition isShow={!isMobile}>
         <div className="reservation-item__cost line-ellipsis--1">
-          {prepareSum(customer.paymentSum, true)}
+          {prepareSum(customer.paymentSum, true, true)}
         </div>
         <div className="reservation-item__service line-ellipsis--1">
           {

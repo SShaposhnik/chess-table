@@ -8,7 +8,7 @@ export interface IconProps {
 
 export interface BathHouseResponse {
   results: ReservationType[]
-  count: 4
+  count: number
 }
 
 export interface ReservationType {
@@ -17,7 +17,7 @@ export interface ReservationType {
 }
 
 // eslint-disable-next-line max-len
-export type ReservationSlot = ReservationSlotCommon & ReservationSlotPayed | ReservationSlotNotPayed;
+export type ReservationSlot = ReservationSlotCommon & (ReservationSlotPayed | ReservationSlotNotPayed);
 
 type ReservationSlotCommon = {
   id: string
@@ -50,4 +50,13 @@ export interface LoadingStateType {
 export interface DataStateType {
   date: Date
   setDate: React.Dispatch<React.SetStateAction<Date>>
+}
+
+export interface PluginProps {
+  containerId: string
+  data: BathHouseResponse | null
+
+  onChangeDate?: (date: Date) => Promise<void>
+  onRightArrow?: (date: Date) => Promise<void>
+  onLeftArrow?: (date: Date) => Promise<void>
 }

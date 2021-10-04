@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
-
-import { useLeftIndent } from 'hooks';
 
 import './HoursList.scss';
 
 const HoursList: React.FC = () => {
   const [hours, setHours] = useState<string[]>([]);
-
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const { absoluteIndent } = useLeftIndent();
 
   const getMonthDays = () => {
     const arr = [];
@@ -22,29 +17,13 @@ const HoursList: React.FC = () => {
     setHours(arr);
   };
 
-  const scrollToDay = () => {
-    const { current } = listRef;
-
-    if (!current) {
-      return;
-    }
-
-    current.scrollTo({
-      left: absoluteIndent - 100,
-    });
-  };
-
-  useEffect(() => {
-    scrollToDay();
-  }, [listRef, absoluteIndent]);
-
   useEffect(() => {
     getMonthDays();
   }, []);
 
   return (
     <ScrollSyncPane>
-      <div className="days-list no-scrollbar" ref={listRef}>
+      <div className="days-list no-scrollbar">
         {
           hours.map((day) => (
             <div key={day.valueOf()} className="days-list__day">
@@ -54,18 +33,6 @@ const HoursList: React.FC = () => {
             </div>
           ))
         }
-        <div
-          className="days-list__circle"
-          style={{
-            left: absoluteIndent,
-          }}
-        />
-        <div
-          className="days-list__timeline"
-          style={{
-            left: absoluteIndent + 7,
-          }}
-        />
       </div>
     </ScrollSyncPane>
   );
